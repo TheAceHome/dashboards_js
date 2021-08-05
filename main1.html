@@ -147,7 +147,7 @@
             .attr("width", x2.bandwidth())
             .attr("fill", "royalblue")
 
-        addBars2.merge(bars2)
+        svg2.selectAll('rect')
             .transition()
             .duration(1000)
             .attr("y", d => y2(d.value))
