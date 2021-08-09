@@ -9,5 +9,6 @@
     <orderEntry type="library" name="d3.v5" level="application" />
     <orderEntry type="library" name="@types/d3" level="application" />
     <orderEntry type="library" name="@types/node" level="application" />
+    <orderEntry type="library" name="@types/express" level="application" />
   </component>
 </module>
