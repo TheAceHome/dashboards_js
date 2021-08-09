@@ -5,7 +5,7 @@
     <title>Title</title>
     <meta name="viewpoint" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen">
-    <script src="D3-graph-gallery/js/d3.v4.js"></script>
+    <script src="d3.v4.js"></script>
 </head>
 <body>
 <div id="my_dataviz"></div>
@@ -14,8 +14,8 @@
 
     // set the dimensions and margins of the graph
     var margin = {top: 30, right: 30, bottom: 70, left: 60},
-        width = 800 - margin.left - margin.right,
-        height = 350 - margin.top - margin.bottom;
+        width = 500 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
@@ -28,6 +28,15 @@
 
     // append the svg object to the body of the page
     var svg2 = d3.select("#my_dataviz")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+    // append the svg object to the body of the page
+    var svg3 = d3.select("#my_dataviz")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -80,6 +89,27 @@
         svg2.append('g')
             .attr("class", 'y-axis')
             .call(yAxis2);
+
+
+
+        const x3 = d3.scaleBand()
+        .domain(d3.range(data.length))
+        .range([margin.left, width - margin.right])
+        .padding(0.1);
+    const xAxis3 = d3.axisBottom()
+        .scale(x3);
+    svg3.append('g')
+        .attr("transform", "translate(0," + height + ")")
+        .attr("class", 'axis-x')
+        .call(xAxis3);
+
+    const y3 = d3.scaleLinear()
+        .range([height - margin.bottom, margin.top]);
+    const yAxis3 = d3.axisLeft()
+            .scale(y3);
+        svg3.append('g')
+            .attr("class", 'y-axis')
+            .call(yAxis3);
 
 
 
@@ -164,8 +194,41 @@
             .call(yAxis2);
         svg2.node();
 
-    }
 
+        //----------------------------------------------------------------------------------------------------------
+        //another graphic
+        const bars3 = svg3.selectAll('.bar').data(data);
+        y2.domain([0, d3.max(data, d => d.value)])
+        bars3
+            .exit()
+            .transition()
+            .duration(1000)
+            .style('fill', 'white')
+            .remove();
+
+        const addBars3 = bars3
+            .enter()
+            .append('rect')
+        addBars3.merge(bars3)
+            .attr("x", (d, i) => x3(i))
+            .attr("y", d => y3(0))
+            .attr('title', (d) => d.value)
+            .attr("width", x3.bandwidth())
+            .attr("fill", "royalblue")
+
+
+        svg3
+            .select('.axis-x')
+            .transition()
+            .call(xAxis2);
+
+        svg3
+            .select('.y-axis')
+            .transition()
+            .call(yAxis2);
+        //svg2.node();
+
+    }
     draw();
 
     setInterval(() => {
