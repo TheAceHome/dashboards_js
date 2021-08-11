@@ -4,7 +4,7 @@ const path = require('path')
 
 const server = http.createServer((req, res) => {
   // if (req.url === '/') {
-  //   fs.readFile(path.join(__dirname, 'public', 'index.html'), (err, data) => {
+  //   fs.readFile(path.join(__dirname, 'public', 'main.html'), (err, data) => {
   //     if (err) {
   //       throw err
   //     }
@@ -27,7 +27,7 @@ const server = http.createServer((req, res) => {
   //   })
   // }
 
-  let filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url)
+  let filePath = path.join(__dirname, 'public', req.url === '/' ? 'main.html' : req.url)
   const ext = path.extname(filePath)
   let contentType = 'text/html'
 
