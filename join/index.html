@@ -9,9 +9,22 @@
         <input type="text" name="name" id="name" />
     </form>
     <form action="main.html" target="_blank">
-        <button>Переход по ссылке</button>
+        <input type="submit" value="send" />
     </form>
-    <script>
+    <div id="chat"></div>
+    <script type="module">
+        const chatEl = document.getElementById("chat");
+        const ws = new WebSocket("ws://127.0.0.1:8000");
+
+        const send = (event) => {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+
+            ws.send(JSON.stringify({name}))
+            return false;
+        }
+        const formEl = document.getElementById("messageForm");
+        formEl.addEventListener("submit", send);
 
     </script>
 </body>

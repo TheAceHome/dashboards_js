@@ -1,16 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no">
+    <title>WebSocket</title>
+<!--    <link rel="stylesheet" href="app.css">-->
 </head>
+
 <body>
-    <form id="messageForm">
-        <input type="text" name="name" id="name" />
+<header>
+    <h1>TheAceHome</h1>
+    <span id="status">OFFLINE</span>
+</header>
+
+<main>
+    <ul id="messages"></ul>
+
+    <form id="form">
+        <label for="message">&gt;</label>
+
+        <input type="text" id="input" required autofocus autocomplete="off">
+
     </form>
-    <form action="main.html" target="_blank">
-        <button>Переход по ссылке</button>
-    </form>
-    <script src="app.js"></script>
+    <button type="button" onclick="clickHandler()">Exit!</button>
+    <script>
+        function clickHandler() {
+          ws.close();
+        }
+    </script>
+</main>
+
+<script src="app.js"></script>
 </body>
 </html>

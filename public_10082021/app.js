@@ -7,17 +7,21 @@ const name = document.getElementById('name');
 const ws = new WebSocket('ws://localhost:3000');
 
 function setStatus(value) {
-    status.innerHTML = value;}
+    status.innerHTML = value;
+}
 
 function printMessage(value) {
     const li = document.createElement('li');
+
     li.innerHTML = value;
-    messages.appendChild(li);}
+    messages.appendChild(li);
+}
 
 form.addEventListener('submit', event =>{
     event.preventDefault();
     ws.send(input.value);
-    input.value='';});
+    input.value='';
+});
 
 ws.onopen = () => setStatus('ONLINE');
 ws.onclose = () => setStatus('DISCONNECTED');

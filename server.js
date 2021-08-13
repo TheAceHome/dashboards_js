@@ -4,37 +4,41 @@ const enc = new TextDecoder("utf-8");
 const uuid = require('uuid');
 
 const clients={};
-
-
+const cli_name={};
 server.on('connection',ws => {
-
-    ws.on('pong', function heartbeat() {
-        this.isAlive = true;
-        console.log('Pong from store: ' + this.store_id);
-    });
 
     const id=uuid.v4();
     clients[id]=ws;
-
+    cli_name[id]=ws;
     ws.on('message', message =>{
-       server.clients.forEach(client=>{
-            if (client.readyState === WebSocket.OPEN){
-                //random numbers
-                setInterval(() => {
-                    const elementNum = Math.random();
-                    client.send(elementNum);
-                }, 10000);
+        message=enc.decode(message)
+        if(cli_name[id]===ws){
 
-                //send messeges
-                client.send(enc.decode(message));
-            }
+           var values = Object.values(cli_name);
+
+           if (values.includes(message)){
+               clients[id].send('Такое уже существует. Попробуйте еще раз')
+                                        }
+           else {
+               cli_name[id]=message
+                }            }
+
+        else {
+            const cli=cli_name[id]
+            for (const id in clients) {
+
+            clients[id].send(''+cli+": "+message)
+                                      }
+             }
+
        });
-    });
+
     ws.send("Добро пожаловать");
+    ws.send("Введите имя");
     ws.on('close', () => {
         delete clients[id];
+        ws.send(cli_name[id]+"покинул чат")
         console.log(`Client is closed ${id}`)
     })
 
 });
-
